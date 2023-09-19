@@ -10,36 +10,6 @@ struct DataHora
     float hora;
 };
 
-struct Locacao
-{
-    char realizada;
-    DataHora Data_hora_retirada;
-    DataHora Data_hora_entrega;
-    string cliente_cpf;
-    string veiculo_placa;
-
-    int menu_locacao(void)
-    {
-        int escolha;
-        do
-        {
-            cout << "--- Gestão de Locação --- " << endl;
-            cout << endl;
-
-            cout << "1 - p/ Incluir Locação" << endl;
-            cout << "2 - p/ Excluir um Locação" << endl;
-            cout << "3 - p/ Alterar um Locação" << endl;
-            cout << "4 - p/ Listar Locações" << endl;
-            cout << "0 - p/ Sair " << endl;
-            cout << "Sua escolha: ";
-            cin >> escolha;
-            cin.ignore();
-
-        } while (escolha < 0 || escolha > 5);
-
-        return escolha;
-    }
-};
 
 struct Cliente
 {
@@ -714,6 +684,80 @@ struct Veiculo
 
         return escolha;
     }
+};
+
+
+
+
+struct Locacao
+{
+    char realizada;
+    DataHora Data_hora_retirada;
+    DataHora Data_hora_entrega;
+    string cliente_cnh;
+    string veiculo_placa;
+
+    int menu_locacao(void)
+    {
+        int escolha;
+        do
+        {
+            cout << "--- Gestão de Locação --- " << endl;
+            cout << endl;
+
+            cout << "1 - p/ Incluir Locação" << endl;
+            cout << "2 - p/ Excluir um Locação" << endl;
+            cout << "3 - p/ Alterar um Locação" << endl;
+            cout << "4 - p/ Listar Locações" << endl;
+            cout << "0 - p/ Sair " << endl;
+            cout << "Sua escolha: ";
+            cin >> escolha;
+            cin.ignore();
+
+        } while (escolha < 0 || escolha > 5);
+
+        return escolha;
+    }
+
+    void excluirLocaçao(vector<Veiculo>&Listaveiculo){
+
+        int cont = -1;
+        system("clear");
+        string exlocacao;
+        cout<<"digite a placa de seu veiculo"<<endl;
+        getline(cin,exlocacao);
+
+        vector<Veiculo>::iterator i;
+        i = Listaveiculo.begin();
+
+        for (auto &veiculo : Listaveiculo)
+        {
+            cont += 1;
+            if (exlocacao == veiculo.Placa_do_Veiculo)
+            {
+
+                advance(i, cont);
+                Listaveiculo.erase(i);
+                cout << "Locação Excluída com sucesso !" << endl;
+            }
+        }
+
+    }
+
+    void alterarLocacao(vector<Locacao> *ListaPassageiro){
+        string placadoveiculo;
+        cout<<"digite a placa do seu veiculo"<<endl;
+        getline(cin,placadoveiculo);
+
+        for(auto& passageiro : ListaPassageiro){
+
+            if(placadoveiculo == passageiro)
+        
+            cout<<"o veiculo é "
+        }    
+    }
+
+
 };
 
 int main(void)
