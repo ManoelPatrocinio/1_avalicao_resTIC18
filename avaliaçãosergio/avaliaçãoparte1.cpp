@@ -4,10 +4,11 @@
 #include <stdio.h>
 using namespace std;
 
-struct DataHora{
+struct DataHora
+{
 
-int dia,mes,ano;
-int hora,min;
+    int dia, mes, ano;
+    int hora, min;
 };
 
 struct clientes
@@ -16,50 +17,40 @@ struct clientes
     string cpf;
     string cnh;
     DataHora datanascimento;
-
 };
 
-struct veiculos
+vector<clientes> ListaClientes;
+
+void LerCliente(clientes *lercliente)
 {
-   string renavan;
-   string placaveiculo;
-   DataHora horaretirada;
-   DataHora horaentrega;
-   string lojaretirada;
-};
-
-
-vector<clientes>ListaClientes;
-vector<veiculos>ListaVeiculos;
-
-
-void LerCliente(clientes *lercliente){
-    cout<<"digite seu nome: "<<endl;
-    getline(cin,lercliente->nome);
-    cout<<"digite seu cpf; "<<endl;
-    getline(cin,lercliente->cpf);
-    cout<<"digite sua cnh : "<<endl;
-    getline(cin,lercliente->cnh);
-    cout<<"digite sua data de nascimento no formato dia/mes/ano "<<endl;
-    cin>>lercliente->datanascimento.dia>>lercliente->datanascimento.mes>>lercliente->datanascimento.ano;
-
+    cout << "digite seu nome: " << endl;
+    getline(cin, lercliente->nome);
+    cout << "digite seu cpf; " << endl;
+    getline(cin, lercliente->cpf);
+    cout << "digite sua cnh : " << endl;
+    getline(cin, lercliente->cnh);
+    cout << "digite sua data de nascimento no formato dia/mes/ano " << endl;
+    cin >> lercliente->datanascimento.dia >> lercliente->datanascimento.mes >> lercliente->datanascimento.ano;
 }
 
-void MostrarCliente(){
- for (auto it = ListaClientes.begin();it != ListaClientes.end(); it++ ){
-    cout<<"os dados do cliente são: "<<endl;
-    cout<<"cliente:"<<it->nome<<endl;
-    cout<<"cpf:"<<it->cpf<<endl;
-    cout<<"cnh:"<<it->cnh<<endl;
-    cout<<"data de nascimento:"<<it->datanascimento.dia<<"/"<< it->datanascimento.mes<<"/"<<it->datanascimento.ano<<endl;
- }   
+void MostrarCliente()
+{
+    for (auto it = ListaClientes.begin(); it != ListaClientes.end(); it++)
+    {   cout << endl;
+        cout << "os dados do cliente são: " << endl;
+        cout << endl;
+        cout << "cliente:" << it->nome << endl;
+        cout << "cpf:" << it->cpf << endl;
+        cout << "cnh:" << it->cnh << endl;
+        cout << "data de nascimento:" << it->datanascimento.dia << "/" << it->datanascimento.mes << "/" << it->datanascimento.ano << endl;
+    }
 }
 
 int menuop(void)
 {
     int escolha;
     do
-    {
+    {   cout << endl;
         cout << "escolha um serviço: " << endl;
         cout << "digite 1 para incluir cliente" << endl;
         cout << "digite 2 para excluir cliente" << endl;
@@ -97,8 +88,6 @@ void excluircpf()
     }
 }
 
-
-
 void localizarcpf()
 {
     string cpf;
@@ -115,7 +104,7 @@ void localizarcpf()
             cout << " seu nome " << it->nome << endl;
             cout << " seu cpf " << it->cpf << endl;
             cout << " sua cnh " << it->cnh << endl;
-            cout <<"data de nascim0ento:"<<it->datanascimento.dia<<"/"<< it->datanascimento.mes<<"/"<<it->datanascimento.ano<<endl;
+            cout << "data de nascim0ento:" << it->datanascimento.dia << "/" << it->datanascimento.mes << "/" << it->datanascimento.ano << endl;
 
             cout << endl;
             cout << endl;
@@ -140,30 +129,54 @@ void alterardados()
             cout << " seu nome " << it->nome << endl;
             cout << " seu cpf " << it->cpf << endl;
             cout << " sua cnh " << it->cnh << endl;
-            cout <<"data de nascim0ento:"<<it->datanascimento.dia<<"/"<< it->datanascimento.mes<<"/"<<it->datanascimento.ano<<endl;
+            cout << "data de nascimento:" << it->datanascimento.dia << "/" << it->datanascimento.mes << "/" << it->datanascimento.ano << endl;
 
             cout << endl;
             cout << endl;
-            cout<< "Deseja alterar algum dado?"<<endl;
-            cout<< "digite 1 para nome "<<endl;
-            cout<< "digite 2 para cpf "<<endl;
-            cout<< "digite 3 para cnh "<<endl;
-            cout<< "digite 4 para data de nascimento "<<endl;
-            cin>>valor;
-           
-            
+            char novocpf;
+            char novonome;
+            char novocnh;
+            char novodata;
+                cout << "Deseja alterar o nome? (S/N) " << endl;
+                cin >> novonome;
+            if (novonome == 'S' || novonome == 's')
+            {
+                cout << "novo nome: " << endl;
+                cin >> it->nome;
+            };
+
+                cout << "Deseja alterar seu cpf? (S/N) " << endl;
+                cin >> novocpf;
+            if (novocpf == 'S' || novocpf == 's')
+            {
+                cout << "novo cpf :" << endl;
+                cin >> it->cpf;
+            };
+
+                cout << "Deseja alterar sua cnh ? (S/N) " << endl;
+                cin >> novocnh;
+            if (novocnh == 'S' || novocnh == 's'){
+                cout << "nova cnh: " << endl;
+                cin >> it->cnh;
+                };
+
+                cout << "Deseja alterar sua data de nascimento? (S/N) " << endl;
+                cin >> novodata;
+            if (novodata == 'S' || novodata == 's'){
+                cout << "nova data de nascimento:" << endl;
+                cin >> it->datanascimento.dia >> it->datanascimento.mes >> it->datanascimento.ano;
+                };
+
+            cout << "dados alterados com sucesso " << endl;
         }
     }
 }
 
-
-
-
-int main(){
+int main()
+{
 
     clientes clienteDados;
-    
-    
+
     int opcao;
 
     do
@@ -177,22 +190,19 @@ int main(){
             ListaClientes.push_back(clienteDados);
             break;
         case 2:
-            excluircpf(); 
+            excluircpf();
             break;
         case 3:
-           alterardados();
+            alterardados();
             break;
-        case 4:   
+        case 4:
             MostrarCliente();
             break;
         case 5:
-             localizarcpf();
+            localizarcpf();
             break;
         }
     } while (opcao != 0);
 
-
-
     return 0;
 }
-
