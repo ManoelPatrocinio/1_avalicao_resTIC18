@@ -9,6 +9,7 @@ struct DataHora
     int Dia, Mes, Ano;
     float hora;
 };
+
 struct Cliente
 {
     string CPF;
