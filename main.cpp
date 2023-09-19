@@ -10,6 +10,37 @@ struct DataHora
     float hora;
 };
 
+struct Locacao
+{
+    char realizada;
+    DataHora Data_hora_retirada;
+    DataHora Data_hora_entrega;
+    string cliente_cpf;
+    string veiculo_placa;
+
+    int menu_locacao(void)
+    {
+        int escolha;
+        do
+        {
+            cout << "--- Gestão de Locação --- " << endl;
+            cout << endl;
+
+            cout << "1 - p/ Incluir Locação" << endl;
+            cout << "2 - p/ Excluir um Locação" << endl;
+            cout << "3 - p/ Alterar um Locação" << endl;
+            cout << "4 - p/ Listar Locações" << endl;
+            cout << "0 - p/ Sair " << endl;
+            cout << "Sua escolha: ";
+            cin >> escolha;
+            cin.ignore();
+
+        } while (escolha < 0 || escolha > 5);
+
+        return escolha;
+    }
+};
+
 struct Cliente
 {
     string CPF;
@@ -689,15 +720,19 @@ int main(void)
 {
     Cliente clienteDados;
     Veiculo veiculoDados;
+    Locacao locacaoDados;
 
     vector<Cliente> listaDeClientes;
     vector<Veiculo> listaDeVeiculos;
+    vector<Locacao> listaDeLocacoes;
+
     int opcaoDeMenu, opcaoDeServico;
 
     do
     {
         cout << " 1 - P/ Gestão de Clientes" << endl;
         cout << " 2 - P/ Gestão de Veiculos" << endl;
+        cout << " 3 - P/ Gestão de Locação" << endl;
         cout << " 0 - P/ Finalizar Programa" << endl;
         cout << " Sua opcao: ";
         cin >> opcaoDeMenu;
@@ -764,7 +799,31 @@ int main(void)
                 }
             } while (opcaoDeServico != 0);
         }
-    } while (opcaoDeMenu != 0);
+        else if (opcaoDeMenu == 3)
+        {
 
+            do
+            {
+                opcaoDeServico = locacaoDados.menu_locacao();
+
+                switch (opcaoDeServico)
+                {
+                case 1:
+
+                    break;
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+                }
+            } while (opcaoDeServico != 0);
+        }
+    } while (opcaoDeMenu != 0);
     return 0;
+
 }
