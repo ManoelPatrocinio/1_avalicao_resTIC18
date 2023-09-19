@@ -15,6 +15,281 @@ struct Cliente
     string Nome;
     DataHora DtNascimento;
     string CNH;
+
+    void incluirCliente(Cliente *clienteDados)
+    {
+
+        system("clear");
+        cout << "Digite o nome do cliente: ";
+        getline(cin, clienteDados->Nome);
+        cout << "Digite o CPF do cliente: ";
+        getline(cin, clienteDados->CPF);
+        cout << "Digite a CNH do cliente: ";
+        getline(cin, clienteDados->CNH);
+
+        do
+        {
+            cout << "Digite o Dia de nascimento do cliente: ";
+            cin >> clienteDados->DtNascimento.Dia;
+
+        } while (clienteDados->DtNascimento.Dia <= 0 || clienteDados->DtNascimento.Dia > 31);
+
+        do
+        {
+            cout << "Digite o Mes de nascimento do cliente: ";
+            cin >> clienteDados->DtNascimento.Mes;
+        } while (clienteDados->DtNascimento.Mes <= 0 || clienteDados->DtNascimento.Mes > 12);
+
+        do
+        {
+            cout << "Digite o Ano de nascimento do cliente: ";
+            cin >> clienteDados->DtNascimento.Ano;
+            cin.ignore();
+        } while (clienteDados->DtNascimento.Ano < 1900 || clienteDados->DtNascimento.Ano > 3000);
+
+        cout << endl;
+        cout << "Cliente cadastrado com sucesso!";
+        cout << endl;
+        cout << endl;
+    };
+
+    void listarClientes(vector<Cliente> &listaClientes)
+    {
+
+        system("clear");
+
+        if (listaClientes.size() <= 0)
+        {
+            cout << endl;
+            cout << endl;
+            cout << "--- Não há Clientes Cadastrados --- " << endl;
+            cout << endl;
+        }
+        else
+        {
+            cout << endl;
+            cout << endl;
+            cout << "--- Clientes Cadastrados --- " << endl;
+            cout << endl;
+
+            for (auto &cliente : listaClientes)
+            {
+
+                cout << "Nome do cliente: " << cliente.Nome << endl;
+                cout << "CPF do cliente: " << cliente.CPF << endl;
+                cout << "CNH do cliente: " << cliente.CNH << endl;
+                cout << "Data de nascimento: " << cliente.DtNascimento.Dia << "/" << cliente.DtNascimento.Mes << "/" << cliente.DtNascimento.Ano << endl;
+                cout << endl;
+            }
+        }
+
+        cout << endl;
+        cout << endl;
+    };
+
+    void excluirCliente(vector<Cliente> &listaClientes)
+    {
+
+        string cpfDeExclusao;
+        int cont = -1;
+
+        system("clear");
+
+        cout << "Digite o CPF do cliente que deseja excluir: ";
+        getline(cin, cpfDeExclusao);
+
+        vector<Cliente>::iterator i;
+        i = listaClientes.begin();
+
+        for (auto &cliente : listaClientes)
+        {
+            cont += 1;
+            if (cpfDeExclusao == cliente.CPF)
+            {
+
+                advance(i, cont);
+                listaClientes.erase(i);
+                cout << "Excluído com sucesso !" << endl;
+            }
+        }
+    };
+
+    void localizaCliente(vector<Cliente> &listaClientes)
+    {
+
+        string cpfDeBusca;
+
+        system("clear");
+
+        cout << "Digite o CPF do cliente que deseja buscar: ";
+        getline(cin, cpfDeBusca);
+
+        for (auto &cliente : listaClientes)
+        {
+            if (cpfDeBusca == cliente.CPF)
+            {
+                cout << endl;
+                cout << "--- Cliente Encontrado ---" << endl;
+                cout << endl;
+                cout << "Nome do cliente: " << cliente.Nome << endl;
+                cout << "CPF do cliente: " << cliente.CPF << endl;
+                cout << "CNH do cliente: " << cliente.CNH << endl;
+                cout << "Data de nascimento: " << cliente.DtNascimento.Dia << "/" << cliente.DtNascimento.Mes << "/" << cliente.DtNascimento.Ano << endl;
+                cout << endl;
+            }
+        }
+    };
+
+    int menuAlteracaoClente()
+    {
+        int escolha;
+        do
+        {
+            system("clear");
+
+            cout << endl;
+            cout << endl;
+
+            cout << "Digite  1 - p/ alterar o nome do cliente: " << endl;
+            cout << "Digite  2 - p/ alterar o CPF do cliente: " << endl;
+            cout << "Digite  3 - p/ alterar o Dia de nascimento do cliente: " << endl;
+            cout << "Digite  4 - p/ alterar o Mes de nascimento do cliente: " << endl;
+            cout << "Digite  5 - p/ alterar o Ano de nascimento do cliente: " << endl;
+            cout << "Digite  6 - p/ alterar a CNH do cliente: " << endl;
+            cout << "Sua escolha: ";
+            cin >> escolha;
+            cin.ignore();
+
+        } while (escolha < 1 || escolha > 6);
+
+        return escolha;
+    }
+
+    void alterarCliente(vector<Cliente> &listaClientes)
+    {
+
+        Cliente clienteNovosDados;
+        string cpfDeAlteracao;
+        int cont = -1, escolha, menuOpcao;
+
+        system("clear");
+
+        cout << "Digite o CPF do cliente que deseja altera os dados: ";
+        getline(cin, cpfDeAlteracao);
+
+        vector<Cliente>::iterator i;
+        i = listaClientes.begin();
+
+        for (auto &cliente : listaClientes)
+        {
+            cont += 1;
+            if (cpfDeAlteracao == cliente.CPF)
+            {
+
+                cout << endl;
+                cout << "--- Cliente Encontrado ---" << endl;
+                cout << endl;
+                cout << "Nome do cliente: " << cliente.Nome << endl;
+                cout << "CPF do cliente: " << cliente.CPF << endl;
+                cout << "CNH do cliente: " << cliente.CNH << endl;
+                cout << "Data de nascimento: " << cliente.DtNascimento.Dia << "/" << cliente.DtNascimento.Mes << "/" << cliente.DtNascimento.Ano << endl;
+                cout << endl;
+
+                do
+                {
+
+                    cout << "Deseja alterar os dados desse cliente ? " << endl;
+                    cout << " Digite 1 - P/ Sim | Digite 2 - P/ Nao" << endl;
+                    cout << "Sua escolha: ";
+                    cin >> escolha;
+
+                    if (escolha == 1)
+                    {
+                        menuOpcao = menuAlteracaoClente();
+
+                        switch (menuOpcao)
+                        {
+                        case 1:
+                            cout << "Informe o novo nome para o cliente: ";
+                            getline(cin, clienteNovosDados.Nome);
+
+                            advance(i, cont);
+
+                            i->Nome = clienteNovosDados.Nome;
+                            break;
+                        case 2:
+                            cout << "Informe o novo CPF para o cliente: ";
+                            getline(cin, clienteNovosDados.CPF);
+
+                            advance(i, cont);
+
+                            i->CPF = clienteNovosDados.CPF;
+                            break;
+                        case 3:
+                            cout << "Informe o novo Dia de  nascimento do cliente: ";
+                            cin >> clienteNovosDados.DtNascimento.Dia;
+
+                            advance(i, cont);
+
+                            i->DtNascimento.Dia = clienteNovosDados.DtNascimento.Dia;
+                            break;
+                        case 4:
+                            cout << "Informe o novo Mes de  nascimento do cliente: ";
+                            cin >> clienteNovosDados.DtNascimento.Mes;
+
+                            advance(i, cont);
+
+                            i->DtNascimento.Mes = clienteNovosDados.DtNascimento.Mes;
+                            break;
+                        case 5:
+                            cout << "Informe o novo Ano de  nascimento do cliente: ";
+                            cin >> clienteNovosDados.DtNascimento.Ano;
+
+                            advance(i, cont);
+
+                            i->DtNascimento.Ano = clienteNovosDados.DtNascimento.Ano;
+                            break;
+                        case 6:
+                            cin.ignore();
+                            cout << "Informe o novo CNH para o cliente: ";
+                            getline(cin, clienteNovosDados.CNH);
+
+                            advance(i, cont);
+
+                            i->CNH = clienteNovosDados.CNH;
+                            break;
+
+                        default:
+                            break;
+                        }
+                    }
+                } while (escolha != 2);
+            }
+        }
+    };
+
+    int menu_cliente(void)
+    {
+        int escolha;
+        do
+        {
+            cout << "--- Gestão de Clientes --- " << endl;
+            cout << endl;
+
+            cout << "1 - p/ Incluir cliente" << endl;
+            cout << "2 - p/ Excluir um cliente" << endl;
+            cout << "3 - p/ Alterar um cliente" << endl;
+            cout << "4 - p/ Listar clientes" << endl;
+            cout << "5 - p/ Localizar Cliente" << endl;
+            cout << "0 - p/ Sair " << endl;
+            cout << "Sua escolha: ";
+            cin >> escolha;
+            cin.ignore();
+
+        } while (escolha < 0 || escolha > 5);
+
+        return escolha;
+    }
 };
 
 struct Veiculo
@@ -24,167 +299,404 @@ struct Veiculo
     DataHora Data_Hora_Retirada;
     DataHora Data_Hora_Entrega;
     string Loja_Retirada;
-};
 
-void incluirCliente(Cliente *clienteDados)
-{
-
-    system("clear");
-    cout << "Digite o nome do cliente: ";
-    getline(cin, clienteDados->Nome);
-    cout << "Digite o CPF do cliente: ";
-    getline(cin, clienteDados->CPF);
-    cout << "Digite o Dia de nascimento do cliente: ";
-    cin >> clienteDados->DtNascimento.Dia;
-    cout << "Digite o Mes de nascimento do cliente: ";
-    cin >> clienteDados->DtNascimento.Mes;
-    cout << "Digite o Ano de nascimento do cliente: ";
-    cin >> clienteDados->DtNascimento.Ano;
-    cin.ignore();
-    cout << "Digite a CNH do cliente: ";
-    getline(cin, clienteDados->CNH);
-
-    cout << endl;
-    cout << "Cliente cadastrado com sucesso!";
-    cout << endl;
-    cout << endl;
-
-};
-
-void listaClientes(vector<Cliente> listaClientes)
-{
-
-    system("clear");
-    cout << endl;
-    cout << endl;
-    cout << "--- Clientes Cadastrados --- " << endl;
-
-    for (auto it = listaClientes.begin(); it != listaClientes.end(); it++)
+    void incluirVeiculo(Veiculo *veiculoDados)
     {
-        cout << "Nome do cliente: " << it->Nome << endl;
-        cout << "CPF do cliente: " << it->CPF << endl;
-        cout << "CNH do cliente: " << it->CNH << endl;
-        cout << "Data de nascimento: " << it->DtNascimento.Dia << "/" << it->DtNascimento.Mes << "/" << it->DtNascimento.Ano << endl;
+
+        system("clear");
+        cout << "Digite o renavan do Veiculo: ";
+        getline(cin, veiculoDados->Renavan);
+        cout << "Digite  a placa do Veiculo: ";
+        getline(cin, veiculoDados->Placa_do_Veiculo);
+
         cout << endl;
-  
-    }
+        cout << endl;
+        cout << "Dados da Retirada do veículo" << endl
+             << endl;
+        cout << "Digite o nome da loja de retirada: ";
+        getline(cin, veiculoDados->Loja_Retirada);
 
-    cout << endl;
-    cout << endl;
-};
-
-
-
-void excluirCliente(vector<Cliente> listaClientes)
-{
-
-    string cpfDeExclusao;
-    int cont = -1;
-
-    system("clear");
-
-    cout << "Digite o CPF do cliente que deseja excluir: ";
-    getline(cin, cpfDeExclusao);
-
-    vector<Cliente>::iterator i;
-    i = listaClientes.begin();
-
-    for (auto it = listaClientes.begin(); it != listaClientes.end(); it++)
-    {
-        cont += 1;
-        if (cpfDeExclusao == it->CPF)
+        do
         {
+            cout << "Digite o Dia de retirada do veiculo: ";
+            cin >> veiculoDados->Data_Hora_Retirada.Dia;
+        } while (veiculoDados->Data_Hora_Retirada.Dia <= 0 || veiculoDados->Data_Hora_Retirada.Dia > 31);
 
-            advance(i, cont);
-            listaClientes.erase(i);
-            cout << "Excluído com sucesso !" << endl;
-        }
-    }
-};
-
-
-void localizaCliente(vector<Cliente> listaClientes)
-{
-
-    string cpfDeBusca;
-
-    system("clear");
-
-    cout << "Digite o CPF do cliente que deseja buscar: ";
-    getline(cin, cpfDeBusca);
-
-   
-    for (auto it = listaClientes.begin(); it != listaClientes.end(); it++)
-    {
-        if (cpfDeBusca == it->CPF)
+        do
         {
-            cout << "--- Cliente Encontrado ---" << endl;
+            cout << "Digite o Mes de retirada do veiculo: ";
+            cin >> veiculoDados->Data_Hora_Retirada.Mes;
+        } while (veiculoDados->Data_Hora_Retirada.Mes <= 0 || veiculoDados->Data_Hora_Retirada.Mes > 12);
+
+        do
+        {
+            cout << "Digite o Ano de retirada do veiculo: ";
+            cin >> veiculoDados->Data_Hora_Retirada.Ano;
+        } while (veiculoDados->Data_Hora_Retirada.Ano < 1900 || veiculoDados->Data_Hora_Retirada.Ano > 3000);
+
+        do
+        {
+            cout << "Digite a Hora/minuto de retirada do veiculo(ex: 10.30 ou 18.15): ";
+            cin >> veiculoDados->Data_Hora_Retirada.hora;
+        } while (veiculoDados->Data_Hora_Retirada.hora <= 0 || veiculoDados->Data_Hora_Retirada.hora > 24);
+
+        cout << endl;
+        cout << endl;
+        cout << "Dados da Entrega do veículo" << endl
+             << endl;
+
+        do
+        {
+            cout << "Digite o Dia da entrega do veiculo: ";
+            cin >> veiculoDados->Data_Hora_Entrega.Dia;
+        } while (veiculoDados->Data_Hora_Entrega.Dia <= 0 || veiculoDados->Data_Hora_Entrega.Dia > 31);
+
+        do
+        {
+            cout << "Digite o Mes da entrega do veiculo: ";
+            cin >> veiculoDados->Data_Hora_Entrega.Mes;
+        } while (veiculoDados->Data_Hora_Entrega.Mes <= 0 || veiculoDados->Data_Hora_Entrega.Mes > 12);
+
+        do
+        {
+            cout << "Digite o Ano da entrega do veiculo: ";
+            cin >> veiculoDados->Data_Hora_Entrega.Ano;
+        } while (veiculoDados->Data_Hora_Entrega.Ano < 1900 || veiculoDados->Data_Hora_Entrega.Ano > 3000);
+
+        do
+        {
+            cout << "Digite a Hora/minuto da entrega do veiculo(ex: 10.30 ou 18.15) : ";
+            cin >> veiculoDados->Data_Hora_Entrega.hora;
+            cin.ignore();
+        } while (veiculoDados->Data_Hora_Entrega.hora < 0 || veiculoDados->Data_Hora_Entrega.hora > 24);
+
+        cout << endl;
+        cout << "Veículo cadastrado com sucesso!";
+        cout << endl;
+        cout << endl;
+    };
+
+    void listarVeiculos(vector<Veiculo> &listaVeiculos)
+    {
+
+        system("clear");
+
+        if (listaVeiculos.size() <= 0)
+        {
             cout << endl;
-            cout << "Nome do cliente: " << it->Nome << endl;
-            cout << "CPF do cliente: " << it->CPF << endl;
-            cout << "CNH do cliente: " << it->CNH << endl;
-            cout << "Data de nascimento: " << it->DtNascimento.Dia << "/" << it->DtNascimento.Mes << "/" << it->DtNascimento.Ano << endl;
             cout << endl;
-            
+            cout << "--- Não há Veiculos Cadastrados --- " << endl;
+            cout << endl;
         }
+        else
+        {
+            cout << endl;
+            cout << endl;
+            cout << "--- Clientes Cadastrados --- " << endl;
+            cout << endl;
+
+            for (auto &veiculo : listaVeiculos)
+            {
+
+                cout << "Renavan do veiculo: " << veiculo.Renavan << endl;
+                cout << "Placa do veiculo: " << veiculo.Placa_do_Veiculo << endl;
+
+                cout << endl;
+                cout << "Dados da Retirada do veículo" << endl
+                     << endl;
+                cout << "Loja de retirada: " << veiculo.Loja_Retirada << endl;
+                cout << "Data de retirada: " << veiculo.Data_Hora_Retirada.Dia << "/" << veiculo.Data_Hora_Retirada.Mes << "/" << veiculo.Data_Hora_Retirada.Ano << endl;
+                cout << endl;
+                cout << "Dados da Entrega do veículo" << endl
+                     << endl;
+                cout << "Data de retirada: " << veiculo.Data_Hora_Entrega.Dia << "/" << veiculo.Data_Hora_Entrega.Mes << "/" << veiculo.Data_Hora_Entrega.Ano << endl;
+                cout << endl;
+            }
+        }
+
+        cout << endl;
+        cout << endl;
+    };
+
+    void excluirVeiculo(vector<Veiculo> &listaVeiculos)
+    {
+
+        string placaDeExclusao;
+        int cont = -1;
+
+        system("clear");
+
+        cout << "Digite a placa do veiculo que deseja excluir: ";
+        getline(cin, placaDeExclusao);
+
+        vector<Veiculo>::iterator i;
+        i = listaVeiculos.begin();
+
+        for (auto &veiculo : listaVeiculos)
+        {
+            cont += 1;
+            if (placaDeExclusao == veiculo.Placa_do_Veiculo)
+            {
+
+                advance(i, cont);
+                listaVeiculos.erase(i);
+                cout << "Excluído com sucesso !" << endl;
+            }
+        }
+    };
+
+    void localizaVeiculo(vector<Veiculo> &listaVeiculos)
+    {
+
+        string placaDeBusca;
+
+        system("clear");
+
+        cout << "Digite a placa do veiculo que deseja buscar: ";
+        getline(cin, placaDeBusca);
+
+        for (auto &veiculo : listaVeiculos)
+        {
+            if (placaDeBusca == veiculo.Placa_do_Veiculo)
+            {
+                cout << "Renavan do veiculo: " << veiculo.Renavan << endl;
+                cout << "Placa do veiculo: " << veiculo.Placa_do_Veiculo << endl;
+
+                cout << endl;
+                cout << "Dados da Retirada do veículo" << endl
+                     << endl;
+                cout << "Loja de retirada: " << veiculo.Loja_Retirada << endl;
+                cout << "Data de retirada: " << veiculo.Data_Hora_Retirada.Dia << "/" << veiculo.Data_Hora_Retirada.Mes << "/" << veiculo.Data_Hora_Retirada.Ano << endl;
+                cout << endl;
+                cout << "Dados da Entrega do veículo" << endl
+                     << endl;
+                cout << "Data de retirada: " << veiculo.Data_Hora_Entrega.Dia << "/" << veiculo.Data_Hora_Entrega.Mes << "/" << veiculo.Data_Hora_Entrega.Ano << endl;
+                cout << endl;
+            }
+        }
+    };
+
+    int menuAlteracaoVeiculo()
+    {
+        int escolha;
+        do
+        {
+            system("clear");
+
+            cout << endl;
+            cout << endl;
+
+            cout << "Digite  1 - p/ alterar o renavan: " << endl;
+            cout << "Digite  2 - p/ alterar  a placa: " << endl;
+
+            cout << "Digite  3 - p/ alterar a loja de retira: " << endl;
+            cout << "Digite  4 - p/ alterar o dia de retirada: " << endl;
+            cout << "Digite  5 - p/ alterar o Mes de retirada: " << endl;
+            cout << "Digite  6 - p/ alterar o Ano de retirada: " << endl
+                 << endl;
+            cout << "Digite  7 - p/ alterar a hora retirada: " << endl
+                 << endl;
+
+            cout << "Digite  8 - p/ alterar o dia de entrega: " << endl;
+            cout << "Digite  9 - p/ alterar o Mes de entrega: " << endl;
+            cout << "Digite  10 - p/ alterar o Ano de entrega: " << endl;
+            cout << "Digite  11 - p/ alterar a hora entrega: " << endl
+                 << endl;
+
+            cout << "Sua escolha: ";
+            cin >> escolha;
+            cin.ignore();
+
+        } while (escolha < 1 || escolha > 11);
+
+        return escolha;
+    }
+
+    void alterarVeiculo(vector<Veiculo> &listaVeiculos)
+    {
+
+        Veiculo veiculoNovosDados;
+        string placaDeAlteracao;
+        int cont = -1, escolha, menuOpcao;
+
+        system("clear");
+
+        cout << "Digite a placa que deseja altera os dados: ";
+        getline(cin, placaDeAlteracao);
+
+        vector<Veiculo>::iterator i;
+        i = listaVeiculos.begin();
+
+        for (auto &veiculo : listaVeiculos)
+        {
+            cont += 1;
+            if (placaDeAlteracao == veiculo.Placa_do_Veiculo)
+            {
+
+                cout << "Renavan do veiculo: " << veiculo.Renavan << endl;
+                cout << "Placa do veiculo: " << veiculo.Placa_do_Veiculo << endl;
+
+                cout << endl;
+                cout << "Dados da Retirada do veículo" << endl
+                     << endl;
+                cout << "Loja de retirada: " << veiculo.Loja_Retirada << endl;
+                cout << "Data de retirada: " << veiculo.Data_Hora_Retirada.Dia << "/" << veiculo.Data_Hora_Retirada.Mes << "/" << veiculo.Data_Hora_Retirada.Ano << endl;
+                cout << endl;
+                cout << "Dados da Entrega do veículo" << endl
+                     << endl;
+                cout << "Data de entrega: " << veiculo.Data_Hora_Entrega.Dia << "/" << veiculo.Data_Hora_Entrega.Mes << "/" << veiculo.Data_Hora_Entrega.Ano << endl;
+                cout << endl;
+
+                do
+                {
+
+                    cout << "Deseja alterar os dados desse veiculo ? " << endl;
+                    cout << " Digite 1 - P/ Sim | Digite 2 - P/ Nao" << endl;
+                    cout << "Sua escolha: ";
+                    cin >> escolha;
+
+                    if (escolha == 1)
+                    {
+                        menuOpcao = menuAlteracaoVeiculo();
+
+                        switch (menuOpcao)
+                        {
+                        case 1:
+                            cout << "Informe o novo renavan: ";
+                            getline(cin, veiculoNovosDados.Renavan);
+
+                            advance(i, cont);
+
+                            i->Renavan = veiculoNovosDados.Renavan;
+                            break;
+                        case 2:
+                            cout << "Informe a nova placa do veiculo: ";
+                            getline(cin, veiculoNovosDados.Placa_do_Veiculo);
+
+                            advance(i, cont);
+
+                            i->Placa_do_Veiculo = veiculoNovosDados.Placa_do_Veiculo;
+                            break;
+                        case 3:
+                            cout << "Informe a nova loja de retirada do veiculo: ";
+                            getline(cin, veiculoNovosDados.Loja_Retirada);
+
+                            advance(i, cont);
+
+                            i->Loja_Retirada = veiculoNovosDados.Loja_Retirada;
+                            break;
+
+                        case 4:
+                            cout << "Informe o novo Dia retirada: ";
+                            cin >> veiculoNovosDados.Data_Hora_Retirada.Dia;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Retirada.Dia = veiculoNovosDados.Data_Hora_Retirada.Dia;
+                            break;
+                        case 5:
+                            cout << "Informe o novo Mes de retirada: ";
+                            cin >> veiculoNovosDados.Data_Hora_Retirada.Mes;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Retirada.Mes = veiculoNovosDados.Data_Hora_Retirada.Mes;
+                            break;
+                        case 6:
+                            cout << "Informe o novo Ano de  retirada: ";
+                            cin >> veiculoNovosDados.Data_Hora_Retirada.Ano;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Retirada.Ano = veiculoNovosDados.Data_Hora_Retirada.Ano;
+                            break;
+                        case 7:
+                            cout << "Informe o nova hora de retirada: ";
+                            cin >> veiculoNovosDados.Data_Hora_Retirada.hora;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Retirada.hora = veiculoNovosDados.Data_Hora_Retirada.hora;
+                            break;
+                        case 8:
+                            cout << "Informe o novo Dia entrega: ";
+                            cin >> veiculoNovosDados.Data_Hora_Entrega.Dia;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Entrega.Dia = veiculoNovosDados.Data_Hora_Entrega.Dia;
+                            break;
+                        case 9:
+                            cout << "Informe o novo Mes de entrega: ";
+                            cin >> veiculoNovosDados.Data_Hora_Entrega.Mes;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Entrega.Mes = veiculoNovosDados.Data_Hora_Entrega.Mes;
+                            break;
+                        case 10:
+                            cout << "Informe o novo Ano de  retirada: ";
+                            cin >> veiculoNovosDados.Data_Hora_Entrega.Ano;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Entrega.Ano = veiculoNovosDados.Data_Hora_Entrega.Ano;
+                            break;
+                        case 11:
+                            cout << "Informe a nova hora de entrega: ";
+                            cin >> veiculoNovosDados.Data_Hora_Entrega.hora;
+
+                            advance(i, cont);
+
+                            i->Data_Hora_Entrega.hora = veiculoNovosDados.Data_Hora_Entrega.hora;
+                            break;
+
+                        default:
+                            break;
+                        }
+                    }
+                } while (escolha != 2);
+            }
+        }
+    };
+
+    int menu_veiculo(void)
+    {
+        int escolha;
+        do
+        {
+            cout << "--- Gestão de Veículos --- " << endl;
+            cout << endl;
+
+            cout << "1 - p/ Incluir veículo" << endl;
+            cout << "2 - p/ Excluir um veículo" << endl;
+            cout << "3 - p/ Alterar um veículo" << endl;
+            cout << "4 - p/ Listar veículos" << endl;
+            cout << "5 - p/ Localizar veículo" << endl;
+            cout << "0 - p/ Sair " << endl;
+            cout << "Sua escolha: ";
+            cin >> escolha;
+            cin.ignore();
+
+        } while (escolha < 0 || escolha > 5);
+
+        return escolha;
     }
 };
-int menu_cliente(void)
-{
-    int escolha;
-    do
-    {
-        cout << "--- Gestão de Clientes --- " << endl;
-        cout << endl;
-
-        cout << "1 - p/ Incluir cliente" << endl;
-        cout << "2 - p/ Excluir um cliente" << endl;
-        cout << "3 - p/ Alterar um cliente" << endl;
-        cout << "4 - p/ Listar clientes" << endl;
-        cout << "5 - p/ Localizar Cliente" << endl;
-        cout << "0 - p/ Sair " << endl;
-        cout << "Sua escolha: ";
-        cin >> escolha;
-        cin.ignore();
-
-    } while (escolha < 0 || escolha > 5);
-
-    return escolha;
-}
-
-int menu_veiculo(void)
-{
-    int escolha;
-    do
-    {
-        cout << "--- Gestão de Veículos --- " << endl;
-        cout << endl;
-
-        cout << "1 - p/ Incluir veículo" << endl;
-        cout << "2 - p/ Excluir um veículo" << endl;
-        cout << "3 - p/ Alterar um veículo" << endl;
-        cout << "4 - p/ Listar veículos" << endl;
-        cout << "5 - p/ Localizar veículo" << endl;
-        cout << "0 - p/ Sair " << endl;
-        cout << "Sua escolha: ";
-        cin >> escolha;
-        cin.ignore();
-
-    } while (escolha < 0 || escolha > 5);
-
-    return escolha;
-}
 
 int main(void)
 {
     Cliente clienteDados;
+    Veiculo veiculoDados;
+
     vector<Cliente> listaDeClientes;
+    vector<Veiculo> listaDeVeiculos;
     int opcaoDeMenu, opcaoDeServico;
 
     do
     {
         cout << " 1 - P/ Gestão de Clientes" << endl;
-        cout << " 2 - P/ Gestão de Clientes" << endl;
+        cout << " 2 - P/ Gestão de Veiculos" << endl;
         cout << " 0 - P/ Finalizar Programa" << endl;
         cout << " Sua opcao: ";
         cin >> opcaoDeMenu;
@@ -193,33 +705,63 @@ int main(void)
         {
             do
             {
-                opcaoDeServico = menu_cliente();
+                opcaoDeServico = clienteDados.menu_cliente();
 
                 switch (opcaoDeServico)
                 {
                 case 1:
-                    incluirCliente(&clienteDados);
+                    clienteDados.incluirCliente(&clienteDados);
                     listaDeClientes.push_back(clienteDados);
                     break;
                 case 2:
-                    excluirCliente(listaDeClientes);
+                    clienteDados.excluirCliente(listaDeClientes);
                     break;
 
-                case 4 :
-                    listaClientes(listaDeClientes);
+                case 3:
+                    clienteDados.alterarCliente(listaDeClientes);
                     break;
-                  case 5:
-                  localizaCliente(listaDeClientes)  ;
-                  break;
+                case 4:
+                    clienteDados.listarClientes(listaDeClientes);
+                    break;
+                case 5:
+                    clienteDados.localizaCliente(listaDeClientes);
+                    break;
 
                 default:
                     break;
                 }
             } while (opcaoDeServico != 0);
         }
-        else if (opcaoDeMenu == 1)
+        else if (opcaoDeMenu == 2)
         {
-            opcaoDeServico = menu_veiculo();
+            do
+            {
+                opcaoDeServico = veiculoDados.menu_veiculo();
+
+                switch (opcaoDeServico)
+                {
+                case 1:
+                    veiculoDados.incluirVeiculo(&veiculoDados);
+                    listaDeVeiculos.push_back(veiculoDados);
+                    break;
+                case 2:
+                    veiculoDados.excluirVeiculo(listaDeVeiculos);
+                    break;
+
+                case 3:
+                    veiculoDados.alterarVeiculo(listaDeVeiculos);
+                    break;
+                case 4:
+                    veiculoDados.listarVeiculos(listaDeVeiculos);
+                    break;
+                case 5:
+                    veiculoDados.localizaVeiculo(listaDeVeiculos);
+                    break;
+
+                default:
+                    break;
+                }
+            } while (opcaoDeServico != 0);
         }
     } while (opcaoDeMenu != 0);
 
